@@ -20,19 +20,17 @@ Description: This setup file covers router and ixia information (if any)
 
 ##########################################################################################################
                     +-----------+                                +----------+
-      .2         .1 |           |.1        30.30.30.0/30      .2 |          |.1            .2
- IXIA---------------|    R1     |--------------------------------|    R2    |----------------IXIA
-     40.40.40.0/30  |           |                                |          | 140.140.140.0/30
+                 .1 |           |.1        30.30.30.0/30      .2 |          |.1
+                    |    R1     |--------------------------------|    R2    |
+                    |           |                                |          |
                     +-----------+                                +----------+
                      AS 65536                                      AS 65536
 ##########################################################################################################
 '''
-
-import pdb, re, time
-from bgp_setup import Router_setup_info
+from bgp_setup import RouterSetupInfo
 
 
-class router_config_data(Router_setup_info):
+class router_config_data(RouterSetupInfo):
     def __init__(self):
         self.topology_info()
 
