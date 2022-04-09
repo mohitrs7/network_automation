@@ -1,5 +1,3 @@
-import logging
-import time, sys
 import sys
 import paramiko
 
@@ -7,7 +5,7 @@ try:
     from ncclient import manager
 except ImportError as ie:
     print("It cannot import module and submodule, please install it via pip install ncclient command", ie)
-    sys.exit(0)
+    sys.exit(1)
 
 
 class Utility():
@@ -33,11 +31,11 @@ class Utility():
         if session_type == "yui":
             for _ in range(MAX_RETRIES):
                 try:
-                    with manager.connect(host=host, port=830, username=username, password=password,
-                                         hostkey_verify=hostkey_verify) as session:
-                        if session.connected:
-                            print(f"DUT {host} connected successfully")
-                            return session
+                    session =  manager.connect(host=host, port=830, username=username, password=password,
+                                         hostkey_verify=hostkey_verify)
+                    if session.connected:
+                        print(f"DUT {host} connected successfully")
+                        return session
                 except Exception as error:
                     print(f"Exception occurs during connection, msg is {error}")
                     return False
