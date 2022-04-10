@@ -530,29 +530,3 @@ DEBUG:ncclient.transport.ssh:[host 10.121.233.9 session-id 261] After 'hello' me
 INFO:ncclient.transport.ssh:[host 10.121.233.9 session-id 261] initialized: session-id=261 | server_capabilities=<dict_keyiterator object at 0x000001D46AF05A90>
 DEBUG:ncclient.transport.ssh:[host 10.121.233.9 session-id 261] installing listener <ncclient.operations.rpc.RPCReplyListener object at 0x000001D46AEFCC70>
 INFO:ncclient.operations.rpc:[host 10.121.233.9 session-id 261] Requesting 'CloseSession'
-DEBUG:ncclient.transport.ssh:[host 10.121.233.9 session-id 261] queueing <?xml version="1.0" encoding="UTF-8"?><nc:rpc xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:3b0f0de5-ff67-4a5e-83cd-e3ccc88e75c0"><nc:close-session/></nc:rpc>
-DEBUG:ncclient.operations.rpc:[host 10.121.233.9 session-id 261] Sync request, will wait for timeout=30
-DEBUG:ncclient.transport.ssh:[host 10.121.233.9 session-id 261] Sending message
-INFO:ncclient.transport.ssh:[host 10.121.233.9 session-id 261] Sending:
-b'\n#184\n<?xml version="1.0" encoding="UTF-8"?><nc:rpc xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:3b0f0de5-ff67-4a5e-83cd-e3ccc88e75c0"><nc:close-session/></nc:rpc>\n##\n'
-DEBUG:ncclient.transport.parser:[host 10.121.233.9 session-id 261] _parse11: starting
-DEBUG:ncclient.transport.parser:[host 10.121.233.9 session-id 261] _parse11: working with buffer of 234 bytes
-DEBUG:ncclient.transport.parser:[host 10.121.233.9 session-id 261] _parse11: matching from 0 bytes from start of buffer
-DEBUG:ncclient.transport.parser:[host 10.121.233.9 session-id 261] _parse11: regular expression start=0, end=6
-DEBUG:ncclient.transport.parser:[host 10.121.233.9 session-id 261] _parse11: found chunk delimiter
-DEBUG:ncclient.transport.parser:[host 10.121.233.9 session-id 261] _parse11: chunk size 224 bytes
-DEBUG:ncclient.transport.parser:[host 10.121.233.9 session-id 261] _parse11: appending 224 bytes
-DEBUG:ncclient.transport.parser:[host 10.121.233.9 session-id 261] _parse11: fragment = "<?xml version="1.0" encoding="UTF-8"?><rpc-reply xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:3b0f0de5-ff67-4a5e-83cd-e3ccc88e75c0" xmlns="urn:ietf:params:xml:ns:netconf:base:1.0"><ok/></rpc-reply>"
-DEBUG:ncclient.transport.parser:[host 10.121.233.9 session-id 261] _parse11: matching from 230 bytes from start of buffer
-DEBUG:ncclient.transport.parser:[host 10.121.233.9 session-id 261] _parse11: regular expression start=0, end=4
-DEBUG:ncclient.transport.parser:[host 10.121.233.9 session-id 261] _parse11: found end of message delimiter
-INFO:ncclient.transport.ssh:[host 10.121.233.9 session-id 261] Received message from host
-DEBUG:ncclient.transport.ssh:[host 10.121.233.9 session-id 261] Received:
-<?xml version="1.0" encoding="UTF-8"?><rpc-reply xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:3b0f0de5-ff67-4a5e-83cd-e3ccc88e75c0" xmlns="urn:ietf:params:xml:ns:netconf:base:1.0"><ok/></rpc-reply>
-DEBUG:ncclient.transport.ssh:[host 10.121.233.9 session-id 261] dispatching message to different listeners: <?xml version="1.0" encoding="UTF-8"?><rpc-reply xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:3b0f0de5-ff67-4a5e-83cd-e3ccc88e75c0" xmlns="urn:ietf:params:xml:ns:netconf:base:1.0"><ok/></rpc-reply>
-DEBUG:ncclient.transport.ssh:[host 10.121.233.9 session-id 261] dispatching message to listener: <ncclient.transport.session.NotificationHandler object at 0x000001D46AF0F580>
-DEBUG:ncclient.transport.ssh:[host 10.121.233.9 session-id 261] dispatching message to listener: <ncclient.operations.rpc.RPCReplyListener object at 0x000001D46AEFCC70>
-DEBUG:ncclient.operations.rpc:[host 10.121.233.9 session-id 261] Delivering to <ncclient.operations.session.CloseSession object at 0x000001D46ACE7D30>
-DEBUG:ncclient.transport.parser:[host 10.121.233.9 session-id 261] _parse11: saving back rest of message after 234 bytes, original size 234
-DEBUG:ncclient.transport.parser:[host 10.121.233.9 session-id 261] _parse11: ending
-DEBUG:ncclient.transport.ssh:EOF in transport thread
