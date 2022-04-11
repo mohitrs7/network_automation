@@ -28,16 +28,15 @@ Description: This setup file covers router and ixia information (if any)
 ##########################################################################################################
 '''
 import sys
+import time
 import logging
 import time
-
-import kwargs as kwargs
-
 sys.path.insert(0, 'C:\\Users\\mrusia\\Desktop\\Network_Automation\\BGP_AUTOMATION\\Library\\')
 from bgp_setup import RouterSetupInfo
 from bgp_lib import BgpLib
 from utility import Utility
 from bgp_rpc_data import BgpRpcData
+from sqlite_connector import DatabaseConnections
 log = logging.getLogger(__name__)
 try:
     from ncclient import manager
@@ -45,23 +44,29 @@ except ImportError as ie:
     print("It cannot import module and submodule, please install it via pip install ncclient command", ie)
     sys.exit(1)
 
-logging.basicConfig(filename="bgp_auth_validation.log", level=logging.DEBUG)
+logging.basicConfig(filename="bgp_auth_validation.log", level=logging.INFO, format = '%(asctime)s %(module)s %(levelname)s: %(message)s')
 
 
-class Bgp_Auth_validation(RouterSetupInfo, BgpLib, Utility, BgpRpcData):
+class Bgp_Auth_validation(RouterSetupInfo, BgpLib, Utility, BgpRpcData, DatabaseConnections):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.testArgs = kwargs
-        self.initLib()
-        self.testInit()
+        self.initLib(desc_="This proc will initialize the library code from other class")
+        self.testInit(desc_="This proc will create interface connection to DUT's")
+        self.initializeDatabase(desc_="This proc will initiate database connection")
+        self.start_time = time.time()
 
-    def testInit(self, desc_="This proc will create interface connection to DUT's"):
-        self.dut1 = self.create_session(self.router1, session_type="yui")
-        self.dut2 = self.create_session(self.router2, session_type="yui")
+    def testInit(self, desc_=""):
+        self.dut1 = self.create_session(self.router1, session_type="yui", desc_="This proc will create netconf session to device 1")
+        self.dut2 = self.create_session(self.router2, session_type="yui", desc_="This proc will create netconf session to device 2")
 
-    def initLib(self, desc_="This proc will initialize the library code from other class"):
+    def initLib(self, desc_=""):
         self.topology_info()
         self.config_data()
+
+    def initializeDatabase(self, desc_=""):
+        self._connectDb()
+        self._createDatabaseTable()
 
     def configure_bgp(self,  desc_=""):
         for data in self.dut1_config_data:
@@ -106,9 +111,17 @@ class Bgp_Auth_validation(RouterSetupInfo, BgpLib, Utility, BgpRpcData):
 
     def testCleanup(self, desc_=""):
         print("entering code cleanup")
+        # self.end_time = time.time()
+        self.end_time = time.time()
+        # update Database
+        self._update_DatabaseTable(self.start_time, self.end_time)
+        # fetch details
+        # self._getRunDetail()
         # closing connections to both DUT
         self.dut1.close_session()
         self.dut2.close_session()
+        # close DatabaseConnections
+        self._dbConnClose()
         # shut down logging
         logging.shutdown()
         if not (self.dut1.connected and self.dut2.connected):
