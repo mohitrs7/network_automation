@@ -10,7 +10,18 @@ except ImportError as ie:
 
 class Utility():
 
-    def create_session(self, router_data_dict, session_type="yui", MAX_RETRIES=3):
+    ##############################################################
+    # This method creates the router interface based on provided input
+    # attributes :
+    #              router_data_dict :dictionary contains all mandatory and non mandatory parameters
+    #              session_type :    session type to be configured for device operation
+    #              MAX_RETRIES:      No. of tries manager attempts before closing the session
+    #              desc_:            Description of proc
+    # Usage :
+    #     self.dut1 = self.create_session(self.router1, session_type="yui", desc_="create netconf session to device 1")
+    ##############################################################
+
+    def create_session(self, router_data_dict, session_type="yui", MAX_RETRIES=3, desc_=""):
         # Establish our NETCONF Session
         mandatory_args = ['host', 'username', 'password']
         non_mandatory_args = ['hostkey_verify']
