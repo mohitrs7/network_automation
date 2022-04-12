@@ -44,9 +44,10 @@ class DatabaseConnections():
     ##############################################################
     def _createDatabaseTable(self):
         create_transection_table="""
-           CREATE TABLE Transection_record (
+           CREATE TABLE if not exists Transection_record (
            run_id INTEGER PRIMARY KEY AUTOINCREMENT,
-           start_timestamp, end_timestamp
+           start_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+           end_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
         );
         """
         self.cursor.execute(create_transection_table)
@@ -79,7 +80,7 @@ class DatabaseConnections():
     ##############################################################
     def _getRunDetail(self):
         get_detail = """
-        select  start_timestamp , end_timestamp from Transection_record 
+        select  ROUND(start_timestamp,2) , ROUND(end_timestamp,2)  from Transection_record 
         where run_id = ? 
         """
         self.cursor.execute(get_detail, (1,))
@@ -87,6 +88,6 @@ class DatabaseConnections():
         for row in records:
             start_timestamp = row[0]
             end_timestamp = row[1]
-            print (f"start time is {start_timestamp}")
+            print(f"start time is {start_timestamp}")
             print(f"End time is {end_timestamp}")
 

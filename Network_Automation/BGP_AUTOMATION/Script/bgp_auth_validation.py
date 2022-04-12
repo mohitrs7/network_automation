@@ -27,12 +27,12 @@ Description: This script will test BGP auth  by changing peer password and check
                      AS 65536                                      AS 65536
 ##########################################################################################################
 '''
+import unittest
 import sys
 import logging
 import time
 import os
-
-pr_dir = os.path.abspath('../Library')
+pr_dir = os.path.abspath('../Library/')
 sys.path.insert(1, pr_dir)
 from bgp_setup import RouterSetupInfo
 from bgp_lib import BgpLib
@@ -50,7 +50,7 @@ except ImportError as ie:
 logging.basicConfig(filename="bgp_auth_validation.log", level=logging.INFO, format = '%(asctime)s %(module)s %(levelname)s: %(message)s')
 
 
-class BgpAuthValidation(BgpLib, Utility, BgpRpcData, DatabaseConnections, RouterConfigData,RouterSetupInfo):
+class BgpAuthValidation(unittest.TestCase, BgpLib, Utility, BgpRpcData, DatabaseConnections, RouterConfigData,RouterSetupInfo):
     def __init__(self, *args, **kwargs):
         __name__ = "BgpAuthValidation"
         self.testName = os.path.splitext(sys.argv[0])[0]
@@ -121,10 +121,14 @@ class BgpAuthValidation(BgpLib, Utility, BgpRpcData, DatabaseConnections, Router
         """
         print("Validate bgp peering from netconf RPC")
         bgp_get_rpc = """<bgp:bgp-state xmlns:bgp="http://ciena.com/ns/yang/ciena-bgp"/>"""
-        self.validate_bgp_neighbor(self.dut1, bgp_get_rpc, expected_state,   desc_="validate BGP state on DUT1")
-        self.validate_bgp_neighbor(self.dut2, bgp_get_rpc,  expected_state,   desc_="validate BGP state on DUT2")
+        state1 = self.validate_bgp_neighbor(self.dut1, bgp_get_rpc, expected_state,   desc_="validate BGP state on DUT1")
+        state2=self.validate_bgp_neighbor(self.dut2, bgp_get_rpc,  expected_state,   desc_="validate BGP state on DUT2")
         print("Validate bgp peering from cli")
-        self.get_bgp_state_cli(self.dut1_ssh, "show bgp peers", expected_state, desc_="validate BGP state on DUT1 via CLI")
+        cli_state = self.get_bgp_state_cli(self.dut1_ssh, "show bgp peers", expected_state, desc_="validate BGP state on DUT1 via CLI")
+        # test with assertEqual
+        self.assertEqual(state1, expected_state)
+        self.assertEqual(state2, expected_state)
+        self.assertEqual(cli_state, expected_state)
 
     def modify_bgp_peer_password(self,  desc_=""):
         """
