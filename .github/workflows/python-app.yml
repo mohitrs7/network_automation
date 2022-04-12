@@ -35,5 +35,5 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: execute py script # run the run.py to get the latest data
       run: |
-        python bgp_auth_validation.py
+        python ${{ env.SCRIPT_DIR }}/bgp_auth_validation.py
         
