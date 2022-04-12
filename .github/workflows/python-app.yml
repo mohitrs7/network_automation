@@ -4,10 +4,9 @@
 name: Python application Run
 
 on:
-   schedule:
+  schedule:
      - cron: "0 0 * * *" #runs at 00:00 UTC everyday
         
-on:
   push:
     branches: [ main ]
   pull_request:
