@@ -21,6 +21,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    
     - uses: actions/checkout@v3
     - name: Set up Python 3.80
       uses: actions/setup-python@v3
@@ -32,5 +33,6 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: execute py script # run the run.py to get the latest data
       run: |
+        export PYTHONPATH=BGP_AUTOMATION 
         python bgp_auth_validation.py
         
