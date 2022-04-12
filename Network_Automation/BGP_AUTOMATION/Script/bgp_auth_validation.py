@@ -32,9 +32,11 @@ import logging
 import time
 import inspect
 import os
-currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parentdir = os.path.dirname(currentdir)
-sys.path.insert(0, parentdir)
+# currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+# parentdir = os.path.dirname(currentdir)
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+sys.path.append(PROJECT_ROOT)
+# sys.path.insert(0, parentdir)
 # sys.path.insert(0, 'C:\\Users\\mrusia\\Desktop\\Network_Automation\\BGP_AUTOMATION\\Library\\')
 from bgp_setup import RouterSetupInfo
 from bgp_lib import BgpLib
