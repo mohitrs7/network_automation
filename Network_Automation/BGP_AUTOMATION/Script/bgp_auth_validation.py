@@ -30,7 +30,10 @@ Description: This script will test BGP auth  by changing peer password and check
 import sys
 import logging
 import time
-sys.path.insert(0, 'C:\\Users\\mrusia\\Desktop\\Network_Automation\\BGP_AUTOMATION\\Library\\')
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0, parentdir)
+# sys.path.insert(0, 'C:\\Users\\mrusia\\Desktop\\Network_Automation\\BGP_AUTOMATION\\Library\\')
 from bgp_setup import RouterSetupInfo
 from bgp_lib import BgpLib
 from utility import Utility
