@@ -36,7 +36,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: execute py script # run the bgp_auth_validation.py to get the latest data
       run: |
-        export PYTHONPATH=BGP_AUTOMATION/Script
-        export PYTHONPATH=BGP_AUTOMATION/Library
+        export PYTHONPATH=Network_Automation/BGP_AUTOMATION/Script
+        export PYTHONPATH=Network_Automation/BGP_AUTOMATION/Library
         python ${{ env.SCRIPT_DIR }}/bgp_auth_validation.py
         
