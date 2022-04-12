@@ -30,14 +30,10 @@ Description: This script will test BGP auth  by changing peer password and check
 import sys
 import logging
 import time
-import inspect
 import os
-# currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-# parentdir = os.path.dirname(currentdir)
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
-sys.path.append(PROJECT_ROOT)
-# sys.path.insert(0, parentdir)
-# sys.path.insert(0, 'C:\\Users\\mrusia\\Desktop\\Network_Automation\\BGP_AUTOMATION\\Library\\')
+
+pr_dir = os.path.abspath('../Library')
+sys.path.insert(1, pr_dir)
 from bgp_setup import RouterSetupInfo
 from bgp_lib import BgpLib
 from utility import Utility
@@ -57,6 +53,7 @@ logging.basicConfig(filename="bgp_auth_validation.log", level=logging.INFO, form
 class BgpAuthValidation(BgpLib, Utility, BgpRpcData, DatabaseConnections, RouterConfigData,RouterSetupInfo):
     def __init__(self, *args, **kwargs):
         __name__ = "BgpAuthValidation"
+        self.testName = os.path.splitext(sys.argv[0])[0]
         super().__init__(*args, **kwargs)
         self.testArgs = kwargs
         self.initLib(desc_="This proc will initialize the library code from other class")
@@ -179,7 +176,7 @@ class BgpAuthValidation(BgpLib, Utility, BgpRpcData, DatabaseConnections, Router
         self._getRunDetail()
         # total run time for script
         time_taken = self.end_time - self.start_time
-        print(f"Total time taken by script to run {BgpAuthValidation.__name__} suit is {time_taken}")
+        print(f"Total time taken by script to run {BgpAuthValidation.__name__} suit is {time_taken} seconds")
         # closing connections to both DUT
         self.dut1.close_session()
         self.dut2.close_session()
