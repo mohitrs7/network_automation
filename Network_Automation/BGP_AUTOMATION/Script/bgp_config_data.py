@@ -30,7 +30,7 @@ Description: This setup file covers router and ixia information (if any)
 from bgp_setup import RouterSetupInfo
 
 
-class router_config_data(RouterSetupInfo):
+class RouterConfigData(RouterSetupInfo):
     def __init__(self):
         self.topology_info()
 
