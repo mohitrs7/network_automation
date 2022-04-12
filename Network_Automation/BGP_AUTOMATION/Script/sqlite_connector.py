@@ -1,4 +1,5 @@
 import sqlite3
+import datetime
 
 
 class DatabaseConnections():
@@ -15,7 +16,9 @@ class DatabaseConnections():
     ##############################################################
     def _connectDb(self):
         try:
-            self.sqliteConnection = sqlite3.connect('transaction.db')
+            self.sqliteConnection = sqlite3.connect('transaction.db',
+                                                    detect_types=sqlite3.PARSE_DECLTYPES |
+                                                        sqlite3.PARSE_COLNAMES)
             self.cursor = self.sqliteConnection.cursor()
             print("Database created and Successfully Connected to SQLite")
         except sqlite3.Error as error:
@@ -84,6 +87,6 @@ class DatabaseConnections():
         for row in records:
             start_timestamp = row[0]
             end_timestamp = row[1]
-            total_run_time = start_timestamp-end_timestamp
-            print(f"Total time taken to run script is {total_run_time}")
+            print (f"start time is {start_timestamp}")
+            print(f"End time is {end_timestamp}")
 
