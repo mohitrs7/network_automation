@@ -2,6 +2,7 @@ import logging
 import sys
 import xml.etree.ElementTree as ET
 import time
+import inspect
 from pprint import pprint
 log = logging.getLogger(__name__)
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
