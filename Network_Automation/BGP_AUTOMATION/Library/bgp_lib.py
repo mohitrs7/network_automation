@@ -82,6 +82,7 @@ class BgpLib(Utility, BgpRpcData):
         out_state = output['rpc-reply']['data']['bgp-state']['instance']['peer']['address-family']['state']
         if str(out_state) == expected_state:
             print(f"BGP neighbor state verified, current state is {out_state}")
+            return str(out_state)
         else:
             logging.error("Failed to validate BGP peer state")
 
@@ -160,6 +161,7 @@ class BgpLib(Utility, BgpRpcData):
             if cli_data:
                 if bgp_state in str(cli_data):
                     print(f"BGP state is {bgp_state} as expected")
+                    return bgp_state
                 else:
                     print("BGP state is not as expected")
             else:
