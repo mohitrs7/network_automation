@@ -45,7 +45,7 @@ class Utility():
                     session =  manager.connect(host=host, port=830, username=username, password=password,
                                          hostkey_verify=hostkey_verify)
                     if session.connected:
-                        print(f"DUT {host} connected successfully")
+                        print(f"DUT {host} connected successfully with netconf interface")
                         return session
                 except Exception as error:
                     print(f"Exception occurs during connection, msg is {error}")
@@ -54,8 +54,14 @@ class Utility():
             for _ in range(MAX_RETRIES):
                 client = paramiko.client.SSHClient()
                 client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-                try :
+                try:
                     client.connect(host, username=username, password=password, port=22)
+                    stdin = client.exec_command("")
+                    remote_conn = client.invoke_shell()
+                    output = remote_conn.recv(1000)
+                    remote_conn.send("\n")
+                    print(f"DUT {host} connected successfully with ssh interface")
+                    return remote_conn
                 except Exception as _e:
                     sys.stdout.write(_e)
                     sys.exit(1)

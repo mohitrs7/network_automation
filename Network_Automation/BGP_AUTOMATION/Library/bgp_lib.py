@@ -1,6 +1,8 @@
 import logging
 import sys
 import xml.etree.ElementTree as ET
+import time
+from pprint import pprint
 log = logging.getLogger(__name__)
 sys.path.insert(0, 'C:\\Users\\mrusia\\Desktop\\Network_Automation\\BGP_AUTOMATION\\Script\\')
 try:
@@ -116,6 +118,81 @@ class BgpLib(Utility, BgpRpcData):
                 log.error(f"Rpc {config_data} failed")
         except Exception:
             log.exception("Exception in BGP config")
+
+    ##############################################################
+    # This method will configure BGP parameters on  router based on input RPC
+    # attributes :
+    #              dut_ssh :    ssh connection for device under test
+    #              command :    command to run on cli prompt
+    #              desc_:       Description of proc
+    # Usage :
+    #               get_data = self.get_cli_output(self.dut1_ssh, "sh bgp peers", desc_="This proc will display BGP peer info on DUT1")
+    ##############################################################
+    def get_cli_output(self, dut_ssh, command, desc_=""):
+        try:
+            dut_ssh.send("\n")
+            dut_ssh.send(command)
+            dut_ssh.send("\n")
+            time.sleep(10)
+            output = dut_ssh.recv(10000)
+            if output is not None:
+                pprint(output)
+                return output
+            else:
+                print("No data retrieved from cli")
+        except Exception:
+            log.exception("Exception in BGP peer show command")
+
+    ##############################################################
+    # This method will configure BGP parameters on  router based on input RPC
+    # attributes :
+    #              dut_ssh :    ssh connection for device under test
+    #              command :    command to run on cli prompt
+    #              desc_:       Description of proc
+    # Usage :
+    #               get_data = self.get_cli_output(self.dut1_ssh, "sh bgp peers", "Connect", desc_="This proc will display BGP peer info on DUT1")
+    ##############################################################
+    def get_bgp_state_cli(self, dut_ssh, command, bgp_state, desc_=""):
+        try:
+            cli_data = self.get_cli_output(dut_ssh, command)
+            if cli_data:
+                if bgp_state in str(cli_data):
+                    print(f"BGP state is {bgp_state} as expected")
+                else:
+                    print("BGP state is not as expected")
+            else:
+                print("CLI data does not display any output")
+        except Exception:
+            log.exception("Exception in BGP peer show command")
+
+    ##############################################################
+    # This method will configure BGP parameters on  router based on input RPC
+    # attributes :
+    #              dut_ssh :    ssh connection for device under test
+    #              command :    command to run on cli prompt
+    #              desc_:       Description of proc
+    # Usage :
+    #               get_data = self.get_cli_output(self.dut1_ssh, "sh bgp peers", "Connect", desc_="This proc will display BGP peer info on DUT1")
+    ##############################################################
+    def ping_interface(self, dut_ssh, destination, desc_=""):
+        try:
+            command = "ping ip destination "+ destination+ "\n"
+            dut_ssh.send("\n")
+            dut_ssh.send(command)
+            dut_ssh.send("\n")
+            time.sleep(10)
+            output = dut_ssh.recv(10000)
+            # if output is not None:
+            #     pprint(output)
+            if output is not None:
+                if "Success Rate is 100.00 percent" in str(output):
+                    print(f"ping success to destination {destination}")
+                else:
+                    print(f"ping failed for destination {destination}")
+            else:
+                print("CLI data does not display any output")
+        except Exception:
+            log.exception("Exception in BGP peer show command")
 
     ##############################################################
     # This method creates the router interface based on provided input
