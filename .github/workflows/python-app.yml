@@ -3,11 +3,12 @@
 
 name: Python application Run
   
+env:
+  SCRIPT_DIR: Network_Automation/BGP_AUTOMATION/Script
+  
 on:
   schedule:
      - cron: "0 0 * * *" #runs at 00:00 UTC everyday
-
-SCRIPT_DIR =Network_Automation/BGP_AUTOMATION/Script
 
   push:
     branches: [ main ]
