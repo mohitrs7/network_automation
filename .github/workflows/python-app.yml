@@ -2,9 +2,6 @@
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
 name: Python application Run
-
-env:
-  SCRIPT_DIR: Network_Automation/BGP_AUTOMATION/Script
   
 on:
   schedule:
@@ -35,5 +32,5 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: execute py script # run the run.py to get the latest data
       run: |
-        python ${{ env.SCRIPT_DIR }}/bgp_auth_validation.py
+        python bgp_auth_validation.py
         
