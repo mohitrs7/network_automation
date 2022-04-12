@@ -4,7 +4,7 @@
 name: Python application Run
 
 env:
-  SCRIPT_DIR: network_automation/Network_Automation/BGP_AUTOMATION/Script
+  SCRIPT_DIR: Network_Automation/BGP_AUTOMATION/Script
   
 on:
   schedule:
